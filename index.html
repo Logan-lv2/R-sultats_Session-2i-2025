@@ -3,51 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>institut 2i- Année 2025-2026...</title>
+    <title>⚠️ ALERTE DE SÉCURITÉ ⚠️</title>
     <style>
+        :root {
+            --hacker-red: #ff0000;
+            --dark-bg: #000;
+            --terminal-bg: rgba(20, 0, 0, 0.9);
+            --glow: 0 0 10px var(--hacker-red);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: black;
-            color: lime;
+            background-color: var(--dark-bg);
+            color: var(--hacker-red);
             font-family: 'Courier New', monospace;
             margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #terminal {
+            position: relative;
+            width: 95%;
+            max-width: 900px;
+            border: 2px solid var(--hacker-red);
+            box-shadow: var(--glow);
             padding: 20px;
-            overflow-x: hidden;
+            background-color: var(--terminal-bg);
+            min-height: 80vh;
+            overflow: hidden;
         }
+
         #matrix-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+            pointer-events: none;
+            font-size: clamp(12px, 2.5vw, 20px);
+            line-height: 1.3;
             white-space: pre;
-            line-height: 1;
-            font-size: 18px;
-            margin-bottom: 20px;
+            overflow: hidden;
+            filter: blur(0.5px);
         }
-        .matrix-line {
-            display: block;
+
+        #content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            overflow-y: auto;
+            padding: 10px;
         }
+
+        .cmd-line {
+            display: flex;
+            margin: 10px 0;
+            flex-wrap: wrap;
+            word-break: break-word;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .prompt {
+            color: var(--hacker-red);
+            margin-right: 12px;
+            flex-shrink: 0;
+            text-shadow: var(--glow);
+        }
+
+        .cmd-text {
+            flex: 1;
+            white-space: pre-wrap;
+            text-shadow: var(--glow);
+        }
+
+        .error { 
+            color: #ff0000;
+            font-weight: bold;
+        }
+
+        .warning { 
+            color: #ff4500;
+        }
+
+        .success { 
+            color: #00ff00;
+        }
+
+        .critical {
+            color: #ffffff;
+            background-color: #ff0000;
+            padding: 5px;
+            display: inline-block;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
         #progress-container {
             width: 100%;
-            background-color: #222;
-            margin: 20px 0;
+            background-color: #111;
+            margin: 25px 0;
+            border: 1px solid var(--hacker-red);
+            height: 30px;
+            position: relative;
+            box-shadow: var(--glow);
         }
+
         #progress-bar {
-            height: 20px;
-            background-color: lime;
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000, #8b0000);
             width: 0%;
+            transition: width 0.2s;
         }
+
+        #progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 0 5px #ff0000;
+        }
+
         #qr-code {
-            color: lime;
+            color: #ff0000;
             font-family: monospace;
             line-height: 1;
             margin: 30px auto;
             text-align: center;
-            font-size: 14px;
+            font-size: clamp(10px, 2vw, 16px);
+            border: 2px solid var(--hacker-red);
+            padding: 15px;
+            background: rgba(30, 0, 0, 0.7);
+            max-width: 300px;
+            box-shadow: var(--glow);
         }
-        .blink {
-            animation: blink 1s infinite;
+
+        #cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: var(--hacker-red);
+            animation: blink 0.8s infinite, glow 1.5s infinite;
+            vertical-align: middle;
         }
+
         @keyframes blink {
             50% { opacity: 0; }
         }
-        #siren-audio {
-            display: none;
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px var(--hacker-red); }
+            50% { box-shadow: 0 0 20px var(--hacker-red); }
+            100% { box-shadow: 0 0 5px var(--hacker-red); }
+        }
+
+        #ip-tracker {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: clamp(10px, 2vw, 14px);
+            color: var(--hacker-red);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 5px 10px;
+            border: 1px solid var(--hacker-red);
+            text-shadow: var(--glow);
+        }
+
+        #countdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--hacker-red);
+            text-shadow: var(--glow);
+            animation: pulse 1s infinite;
+        }
+
+        @media (max-width: 768px) {
+            #terminal {
+                padding: 15px;
+                min-height: 85vh;
+            }
+            .cmd-line {
+                font-size: 14px;
+            }
+            #countdown {
+                font-size: 1.5rem;
+                top: 10px;
+                right: 10px;
+            }
         }
     </style>
 </head>
@@ -56,55 +222,86 @@
         <source src="https://soundbible.com/mp3/Emergency_Alert-Siren-With-SoundBible.com-156115905.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="content"></div>
+    <div id="countdown">24:00:00</div>
+
+    <div id="terminal">
+        <div id="matrix-container"></div>
+        <div id="content"></div>
+    </div>
+    
+    <div id="ip-tracker"></div>
 
     <script>
-        // Configuration
-        const locations = ["République du Congo, Pointe-Noire", "Localisation Réussie", "Dark Web", "Données volées"];
-        const chars = "01!@#$%^&*()_+-=[]{}|;:,.<>?║╗╝╚╔╩╦╣╠";
-        
-        // Éléments DOM
+        const config = {
+            hackerName: "KANG JIN-HUYK",
+            contact: "kang-jinhuyk@darkweb.hack",
+            ransomAmount: "0.5 BTC",
+            locations: [
+                "Serveur Piraté: AWS-US-EAST-1",
+                "Localisation: 37.7749° N, 122.4194° W",
+                "Dark Web Node #X-42",
+                "Réseau Compromis: " + window.location.hostname
+            ],
+            chars: "01!@#$%^&*()_+-=[]{}|;:,.<>?║╗╝╚╔╩╦╣╠▓▒░",
+            malware: [
+                "ShadowRAT v4.2",
+                "BloodStealer",
+                "DragonWorm",
+                "PhoenixKeylogger"
+            ],
+            files: ["documents", "photos", "emails", "passwords", "banking"],
+            extensions: ["pdf", "jpg", "docx", "xlsx", "db", "enc"]
+        };
+
         const contentDiv = document.getElementById('content');
         const sirenAudio = document.getElementById('siren-audio');
-        
-        // Fonctions d'affichage
-        function addText(text, color = 'lime', blink = false) {
-            const p = document.createElement('p');
-            p.style.color = color;
-            p.style.margin = '10px 0';
-            if (blink) p.classList.add('blink');
-            p.textContent = text;
-            contentDiv.appendChild(p);
-            return p;
+        const ipTracker = document.getElementById('ip-tracker');
+        const matrixContainer = document.getElementById('matrix-container');
+        const countdownEl = document.getElementById('countdown');
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
-        
-        function matrixStream(lines = 10, width = 60) {
-            const container = document.createElement('div');
-            container.id = 'matrix-container';
+
+        function getRandom(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function generateRandomIP() {
+            return `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+        }
+
+        function addCmd(text, type = '', prompt = 'root@bloodnet:~#') {
+            const cmdDiv = document.createElement('div');
+            cmdDiv.className = 'cmd-line';
             
-            for (let i = 0; i < lines; i++) {
-                const line = document.createElement('span');
-                line.className = 'matrix-line';
-                line.textContent = generateMatrixLine(width);
-                container.appendChild(line);
-                container.appendChild(document.createElement('br'));
+            cmdDiv.innerHTML = `
+                <span class="prompt">${prompt}</span>
+                <span class="cmd-text ${type}">${text}</span>
+            `;
+            
+            contentDiv.appendChild(cmdDiv);
+            cmdDiv.scrollIntoView({ behavior: 'smooth' });
+            return cmdDiv;
+        }
+
+        function updateMatrix() {
+            const width = Math.floor(window.innerWidth / 9);
+            let matrixText = '';
+            
+            for (let i = 0; i < 25; i++) {
+                let line = '';
+                for (let j = 0; j < width; j++) {
+                    line += Math.random() > 0.3 ? getRandom(config.chars) : ' ';
+                }
+                matrixText += line + '\n';
             }
             
-            contentDiv.appendChild(container);
-            return container;
+            matrixContainer.textContent = matrixText;
         }
-        
-        function generateMatrixLine(length) {
-            let line = '';
-            for (let i = 0; i < length; i++) {
-                line += chars[Math.floor(Math.random() * chars.length)];
-            }
-            return line;
-        }
-        
+
         function showQRCode() {
             const qr = `
-█████████████████████████████████
 █████████████████████████████████
 ████ ▄▄▄▄▄ █▀▄ ▄▀█ █▀▀▄▄▄▄▄ ████
 ████ █   █ █▄▀▄▀▄█ ▄▀█ █   █ ████
@@ -115,8 +312,6 @@
 ████ ▄▄▄▄▄ █▄▀█ █▄█ █ █ ▄ █ ████
 ████ █   █ █▀▄▀▄▀▄▀▄▀▄▀▀▄▀▀█████
 ████ █▄▄▄█ █▀▄▀▀▄▀▀▀▄▀ ▀▄▀██████
-████▄▄▄▄▄▄▄█▄▄█▄█▄█▄█▄▄█████████
-█████████████████████████████████
 █████████████████████████████████
             `;
             
@@ -124,86 +319,122 @@
             qrDiv.id = 'qr-code';
             qrDiv.textContent = qr;
             contentDiv.appendChild(qrDiv);
-            
-            addText("Scanne ce QR code pour payer la rançon... (ou pas)", 'lime');
         }
-        
-        // Animation principale
-        async function matrixHack() {
-            // Démarrer la sirène
+
+        function updateIPTracker() {
+            const fakeIP = generateRandomIP();
+            const countries = ['CN', 'RU', 'KP', 'IR', 'SY'];
+            const country = getRandom(countries);
+            
+            ipTracker.textContent = `TRACKING: ${fakeIP} (${country}) | ${new Date().toLocaleTimeString()}`;
+        }
+
+        function startCountdown() {
+            let hours = 24;
+            let minutes = 0;
+            let seconds = 0;
+            
+            const interval = setInterval(() => {
+                seconds--;
+                if (seconds < 0) {
+                    seconds = 59;
+                    minutes--;
+                }
+                if (minutes < 0) {
+                    minutes = 59;
+                    hours--;
+                }
+                if (hours < 0) {
+                    clearInterval(interval);
+                    return;
+                }
+                
+                countdownEl.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (Math.random() > 0.9) {
+                    countdownEl.style.color = getRandom(['#ff0000', '#ff4500', '#ff6347']);
+                }
+            }, 1000);
+        }
+
+        async function executeAttack() {
+            // Message initial ajouté ici
+            addCmd("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄", "error");
+            addCmd("<span class='critical'>KANG JIN-HUYK À RÉUSSI À PRENDRE L'ACCÈS À VOTRE APPAREIL</span>", "", "");
+            addCmd("<span class='critical'>LES CONDITIONS D'ACCÈS ONT ÉTÉ REMPLIES</span>", "", "");
+            addCmd("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀", "error");
+            await delay(3000);
+
+            updateMatrix();
+            setInterval(updateMatrix, 120);
+            setInterval(updateIPTracker, 1500);
+            startCountdown();
+            
             try {
-                sirenAudio.play();
+                await sirenAudio.play();
             } catch (e) {
                 console.log("Audio bloqué par le navigateur");
             }
-            
-            // Étape 1: Introduction
-            addText("[⚡] SYSTÈME PIRATÉ PAR KANG JIN-HUYK");
-            await delay(1500);
-            
-            // Étape 2: Localisation
-            addText(`[📍] Localisation détectée: ${locations[Math.floor(Math.random() * locations.length)]}`);
-            await delay(1000);
-            
-            // Étape 3: Accès root
-            addText("[🔓] ACCÈS ROOT OBTENU");
-            await delay(1000);
-            
-            // Étape 4: Effet Matrix
-            for (let i = 0; i < 3; i++) {
-                const matrix = matrixStream();
-                await delay(300);
-                matrix.remove();
+
+            const attackSteps = [
+                { text: "Exploitation de la faille Zero-Day...", type: "warning", delay: 1000 },
+                { text: "Contournement des protections...", type: "warning", delay: 1200 },
+                { text: "Accès root obtenu", type: "success", delay: 800 },
+                { text: `Localisation: ${getRandom(config.locations)}`, type: "warning", delay: 1500 },
+                { text: `Injection du malware: ${getRandom(config.malware)}`, type: "error", delay: 1800 }
+            ];
+
+            for (const step of attackSteps) {
+                addCmd(step.text, step.type);
+                await delay(step.delay);
             }
-            
-            // Étape 5: Cryptage
-            addText("[💾] CRYPTAGE DES DONNÉES...");
-            
-            // Barre de progression
-            const progressContainer = document.createElement('div');
-            progressContainer.id = 'progress-container';
-            const progressBar = document.createElement('div');
-            progressBar.id = 'progress-bar';
-            progressContainer.appendChild(progressBar);
-            contentDiv.appendChild(progressContainer);
-            
-            const progressText = addText("[📁] Progression: 0%");
-            
-            // Animation de la barre de progression
+
+            contentDiv.innerHTML += `
+                <div id="progress-container">
+                    <div id="progress-bar"></div>
+                    <div id="progress-text">0%</div>
+                </div>
+            `;
+
             for (let i = 0; i <= 100; i++) {
-                progressBar.style.width = `${i}%`;
-                progressText.textContent = `[📁] Progression: ${i}%`;
-                await delay(30);
+                document.getElementById('progress-bar').style.width = `${i}%`;
+                document.getElementById('progress-text').textContent = `${i}%`;
+                
+                if (i % 8 === 0) {
+                    const file = `${getRandom(config.files)}_${Math.floor(Math.random() * 1000)}.${getRandom(config.extensions)}`;
+                    addCmd(`[EXFILTRATION] ${file}`, "info", "");
+                }
+                
+                await delay(40 + Math.random() * 30);
             }
+
+            addCmd("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄", "error");
+            addCmd("<span class='critical'>⚠️ ATTENTION: PIRATAGE RÉUSSI ⚠️</span>", "", "");
+            addCmd(`<span class='error'>VOUS AVEZ ÉTÉ PIRATÉ PAR: ${config.hackerName}</span>`, "", "");
+            addCmd("✔️ DONNÉES TRANSFÉRÉES À:", "error");
+            addCmd(config.contact, "error", ">>> ");
+            addCmd("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀", "error");
             
-            // Étape 6: Menace
-            addText("\n[⚠️] TOUS TES FICHIERS ONT ÉTÉ CRYPTÉS!", 'red');
-            await delay(1000);
-            addText("[💰] RANÇON: 0.001 BITCOIN (SINON TOUT SERA LEAKÉ)", 'red');
             await delay(2000);
+            addCmd("POUR ÉVITER LA DIFFUSION PUBLIQUE:", "error");
+            addCmd(`VERSER ${config.ransomAmount} À L'ADRESSE CI-DESSOUS`, "error");
             
-            // Étape 7: Compte à rebours
-            addText("\n[🔥] AUTO-DESTRUCTION DU SYSTÈME DANS...", 'red');
-            for (let i = 10; i > 0; i--) {
-                addText(`[💥] ${i}...`, 'red');
-                await delay(500);
-            }
-            
-            // Étape 8: Révélation
-            contentDiv.innerHTML = '';
+            await delay(1000);
             showQRCode();
-            addText("✔️ LES DONNÉES ONT ÉTÉ RÉCUPÉRÉES AVEC SUCCÈS 💾📱✔️", 'red', true);
             
-            // Arrêter la sirène
-            sirenAudio.pause();
+            await delay(2000);
+            addCmd("-----------------------------------------------------", "warning");
+            addCmd("<span class='warning'>DÉTECTION D'ACTIVITÉ SECONDAIRE:</span>", "", "");
+            addCmd("CLIQUÉ DEPUIS LE GROUPE: INSTITUT INTERNATIONAL 2I", "warning");
+            addCmd(`NOMBRE DE MEMBRES: 812`, "warning", ">>> ");
+            addCmd(`CRÉATEUR: GAD MBEMBA`, "warning", ">>> ");
+            addCmd("-----------------------------------------------------", "warning");
+            
+            contentDiv.innerHTML += '<div id="cursor"></div>';
         }
-        
-        function delay(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
-        
-        // Démarrer l'animation
-        matrixHack();
+
+        executeAttack();
     </script>
 </body>
 </html>
