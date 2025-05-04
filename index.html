@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piratage en Cours...</title>
+    <style>
+        body {
+            background-color: black;
+            color: lime;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        #matrix-container {
+            white-space: pre;
+            line-height: 1;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .matrix-line {
+            display: block;
+        }
+        #progress-container {
+            width: 100%;
+            background-color: #222;
+            margin: 20px 0;
+        }
+        #progress-bar {
+            height: 20px;
+            background-color: lime;
+            width: 0%;
+        }
+        #qr-code {
+            color: lime;
+            font-family: monospace;
+            line-height: 1;
+            margin: 30px auto;
+            text-align: center;
+            font-size: 14px;
+        }
+        .blink {
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        #siren-audio {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <audio id="siren-audio" loop>
+        <source src="https://soundbible.com/mp3/Emergency_Alert-Siren-With-SoundBible.com-156115905.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="content"></div>
+
+    <script>
+        // Configuration
+        const locations = ["République du Congo, Pointe-Noire", "Localisation Réussie", "Dark Web", "Données volées"];
+        const chars = "01!@#$%^&*()_+-=[]{}|;:,.<>?║╗╝╚╔╩╦╣╠";
+        
+        // Éléments DOM
+        const contentDiv = document.getElementById('content');
+        const sirenAudio = document.getElementById('siren-audio');
+        
+        // Fonctions d'affichage
+        function addText(text, color = 'lime', blink = false) {
+            const p = document.createElement('p');
+            p.style.color = color;
+            p.style.margin = '10px 0';
+            if (blink) p.classList.add('blink');
+            p.textContent = text;
+            contentDiv.appendChild(p);
+            return p;
+        }
+        
+        function matrixStream(lines = 10, width = 60) {
+            const container = document.createElement('div');
+            container.id = 'matrix-container';
+            
+            for (let i = 0; i < lines; i++) {
+                const line = document.createElement('span');
+                line.className = 'matrix-line';
+                line.textContent = generateMatrixLine(width);
+                container.appendChild(line);
+                container.appendChild(document.createElement('br'));
+            }
+            
+            contentDiv.appendChild(container);
+            return container;
+        }
+        
+        function generateMatrixLine(length) {
+            let line = '';
+            for (let i = 0; i < length; i++) {
+                line += chars[Math.floor(Math.random() * chars.length)];
+            }
+            return line;
+        }
+        
+        function showQRCode() {
+            const qr = `
+█████████████████████████████████
+█████████████████████████████████
+████ ▄▄▄▄▄ █▀▄ ▄▀█ █▀▀▄▄▄▄▄ ████
+████ █   █ █▄▀▄▀▄█ ▄▀█ █   █ ████
+████ █▄▄▄█ █ ▀▄▀ █ ▀▄█ █▄▄▄█ ████
+████▄▄▄▄▄▄▄█ █ ▀▄█▄▄▄▄▄▄▄▄▄▄████
+████   ▄ ▀▄▀ ▀ ▄▀▀ ▄▄▀▀▀▀▀▄▀▄████
+████▄▄█▄█▄▄▄▀▄▀▀▄▄▄▄▀▀▄▀▀▀▄█████
+████ ▄▄▄▄▄ █▄▀█ █▄█ █ █ ▄ █ ████
+████ █   █ █▀▄▀▄▀▄▀▄▀▄▀▀▄▀▀█████
+████ █▄▄▄█ █▀▄▀▀▄▀▀▀▄▀ ▀▄▀██████
+████▄▄▄▄▄▄▄█▄▄█▄█▄█▄█▄▄█████████
+█████████████████████████████████
+█████████████████████████████████
+            `;
+            
+            const qrDiv = document.createElement('pre');
+            qrDiv.id = 'qr-code';
+            qrDiv.textContent = qr;
+            contentDiv.appendChild(qrDiv);
+            
+            addText("Scanne ce QR code pour payer la rançon... (ou pas)", 'lime');
+        }
+        
+        // Animation principale
+        async function matrixHack() {
+            // Démarrer la sirène
+            try {
+                sirenAudio.play();
+            } catch (e) {
+                console.log("Audio bloqué par le navigateur");
+            }
+            
+            // Étape 1: Introduction
+            addText("[⚡] SYSTÈME PIRATÉ PAR KANG JIN-HUYK");
+            await delay(1500);
+            
+            // Étape 2: Localisation
+            addText(`[📍] Localisation détectée: ${locations[Math.floor(Math.random() * locations.length)]}`);
+            await delay(1000);
+            
+            // Étape 3: Accès root
+            addText("[🔓] ACCÈS ROOT OBTENU");
+            await delay(1000);
+            
+            // Étape 4: Effet Matrix
+            for (let i = 0; i < 3; i++) {
+                const matrix = matrixStream();
+                await delay(300);
+                matrix.remove();
+            }
+            
+            // Étape 5: Cryptage
+            addText("[💾] CRYPTAGE DES DONNÉES...");
+            
+            // Barre de progression
+            const progressContainer = document.createElement('div');
+            progressContainer.id = 'progress-container';
+            const progressBar = document.createElement('div');
+            progressBar.id = 'progress-bar';
+            progressContainer.appendChild(progressBar);
+            contentDiv.appendChild(progressContainer);
+            
+            const progressText = addText("[📁] Progression: 0%");
+            
+            // Animation de la barre de progression
+            for (let i = 0; i <= 100; i++) {
+                progressBar.style.width = `${i}%`;
+                progressText.textContent = `[📁] Progression: ${i}%`;
+                await delay(30);
+            }
+            
+            // Étape 6: Menace
+            addText("\n[⚠️] TOUS TES FICHIERS ONT ÉTÉ CRYPTÉS!", 'red');
+            await delay(1000);
+            addText("[💰] RANÇON: 0.001 BITCOIN (SINON TOUT SERA LEAKÉ)", 'red');
+            await delay(2000);
+            
+            // Étape 7: Compte à rebours
+            addText("\n[🔥] AUTO-DESTRUCTION DU SYSTÈME DANS...", 'red');
+            for (let i = 10; i > 0; i--) {
+                addText(`[💥] ${i}...`, 'red');
+                await delay(500);
+            }
+            
+            // Étape 8: Révélation
+            contentDiv.innerHTML = '';
+            showQRCode();
+            addText("😂😂 PSYCH! C'ÉTAIT UN FAKE! TU VIENS DE TE FAIRE MATRIXER!", 'red', true);
+            
+            // Arrêter la sirène
+            sirenAudio.pause();
+        }
+        
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        // Démarrer l'animation
+        matrixHack();
+    </script>
+</body>
+</html>
